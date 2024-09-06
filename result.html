@@ -1,0 +1,383 @@
+    <section class="suite">
+      <h1>API is up</h1>
+      <dl>
+        <dt>Status code is 200</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/APISatus.test.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+       // console.log((jsonData))
+       let response = await axios.get(&#x60;${jsonData.baseUrl}/status&#x60;);
+       expect(response.status).equals(200);
+    }</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Add product to Cart</h1>
+      <dl>
+Antes de hacer el llamado
+494244504
+        <dt>Status code 201</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/addItemToCart.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    let request = {
+      url: &#x60;${jsonData.baseUrl}/carts/${jsonData.cartId}/items/&#x60;,
+      method: &#x22;POST&#x22;,
+      data: {
+        productId: &#x60;${jsonData.productId}&#x60;,
+      },
+    };
+    console.log(&#x22;Antes de hacer el llamado&#x22;);
+    try {
+      response = await axios(request);
+      expect(response.status).equals(201);
+      expect(response.data.created).to.be.true;
+      jsonData.itemIdOnCart = response.data.itemId;
+      console.log(jsonData.itemIdOnCart);
+      fs.writeFileSync(&#x22;../env.json&#x22;, JSON.stringify(jsonData));
+    } catch (e) {
+      console.log(&#x22;Add Item to cart failed&#x22;);
+      // console.log(e);
+    }
+  }</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Create a cart</h1>
+      <dl>
+{
+  baseUrl: 'https://simple-grocery-store-api.glitch.me',
+  productId: 4643,
+  cartId: 'qEUmbuyzcTwxZb_pUgM14',
+  itemIdOnCart: 494244504,
+  accessToken: '6c5bf91771321a17afef53128cb564c3c1053a309eb8b213424dd1599428a52b',
+  orderId: 'LgnDQ34R5u-1rub1IFkZg'
+}
+        <dt>Status code</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/createNewCart.test.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    response = await axios.post(&#x60;${jsonData.baseUrl}/carts&#x60;);
+    expect(response.status).to.be.equals(201);
+    jsonData.cartId = response.data.cartId;
+    //console.log(jsonData);
+    try {
+      await fs.writeFileSync(&#x22;../env.json&#x22;, JSON.stringify(jsonData));
+      console.log(jsonData);
+    } catch (e) {
+      console.log(&#x22;Create cart failed&#x22;);
+      // console.log(&#x22;Error &#x22; + e);
+    }
+  }</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Create an order</h1>
+      <dl>
+Creating cart ---------
+Adding items to cart ----------
+F0_wBwkeFYnDgA2Z3EhPG
+Before setting order id
+File written: uSwpD6uCyPFOlABfQuCNP
+        <dt>Status code is 201</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/createOrder.test.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    let request = {
+      url: &#x60;${jsonData.baseUrl}/orders&#x60;,
+      method: &#x22;POST&#x22;,
+      headers: {
+        &#x22;Content-Type&#x22;: &#x22;application/json&#x22;,
+        Authorization: &#x60;Bearer ${jsonData.accessToken}&#x60;,
+      },
+      data: {
+        cartId: &#x60;${jsonData.cartId}&#x60;,
+        customerName: &#x22;Test name&#x22;,
+      },
+    };
+    try {
+      console.log(&#x60;${jsonData.cartId}&#x60;);
+      response = await axios(request);
+      expect(response.status).to.equals(201);
+      console.log(&#x22;Before setting order id&#x22;);
+      jsonData.orderId = response.data.orderId;
+      jsonData.cartId = &#x22;&#x22;;
+      jsonData.itemIdOnCart = 0;
+      await fs.writeFileSync(&#x22;../env.json&#x22;, JSON.stringify(jsonData));
+      console.log(&#x22;File written: &#x22; + jsonData.orderId);
+    } catch (e) {
+      console.log(&#x22;Order creation failed&#x22;);
+      // console.log(&#x22;Error: &#x22; + e);
+    }
+  }</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Delete item on cart</h1>
+      <dl>
+Creating cart ---------
+Adding items to cart ----------
+        <dt>Status code 204</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/deletItemOnCart.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    let request = {
+      url: &#x60;${jsonData.baseUrl}/carts/${cartId}/items/${itemIdOnCart}&#x60;,
+      method: &#x22;DELETE&#x22;,
+    };
+    try {
+      response = await axios(request);
+      expect(response.status).to.equal(204);
+      // jsonData.itemIdOnCart = 0;
+      // await fs.writeFileSync(&#x22;../env.json&#x22;, JSON.stringify(jsonData));
+    } catch (e) {
+      console.log(&#x22;Delete item failed&#x22;);
+      // console.log(e);
+    }
+  }</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Delete an Order</h1>
+      <dl>
+Creating cart ---------
+Adding items to cart ----------
+Delete order failed
+        <dt>Status code is 204</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/deleteOrder.test.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    try {
+      // console.log(&#x60;${jsonData.cartId}&#x60;);
+      response = await axios(request);
+      expect(response.status).to.equals(204);
+      jsonData.orderId = &#x22;&#x22;;
+      await fs.writeFileSync(&#x22;../env.json&#x22;, JSON.stringify(jsonData));
+    } catch (e) {
+      console.log(&#x22;Delete order failed&#x22;);
+      // console.log(&#x22;Error: &#x22; + e);
+    }
+  }</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Get all Order</h1>
+      <dl>
+
+        <dt>Status code is 201</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getAllOrders.test.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    try {
+      console.log(&#x60;${jsonData.cartId}&#x60;);
+      response = await axios(request);
+      expect(response.status).to.equals(200);
+    } catch (e) {
+      console.log(&#x22;Get all orders failed&#x22;);
+      // console.log(&#x22;Error: &#x22; + e);
+    }
+  }</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>All products are returned</h1>
+      <dl>
+        <dt>Status code 200</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getAllProducts.test.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    response = await axios(request);
+    // console.log(response);
+    expect(response.status).equals(200);
+    jsonData.productId = response.data[0].id;
+    await fs.writeFileSync(&#x22;../env.json&#x22;, JSON.stringify(jsonData));
+  }</code></pre></dd>
+        <dt>data should not be empty</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getAllProducts.test.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    expect(response.data).to.not.be.empty;
+  }</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Get a cart</h1>
+      <dl>
+Creating cart ---------
+        <dt>Status code 200</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getCart.test.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    response = await axios.get(&#x60;${jsonData.baseUrl}/carts/${jsonData.cartId}&#x60;);
+    expect(response.status).to.equal(200);
+    expect(response.data.items).to.be.empty;
+  }</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Get cart items</h1>
+      <dl>
+Creating cart ---------
+Adding items to cart ----------
+        <dt>Status code 200</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getCartItems.test.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    response = await axios.get(
+      &#x60;${jsonData.baseUrl}/carts/${jsonData.cartId}/items&#x60;,
+    );
+    expect(response.status).to.equal(200);
+  }</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Get an Order</h1>
+      <dl>
+Creating cart ---------
+Adding items to cart ----------
+Creating Order ------
+
+Get single order failed
+        <dt>Status code is 200</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getSingleOrder.test.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    let request = {
+      url: &#x60;${jsonData.baseUrl}/orders/${jsonData.orderId}&#x60;,
+      method: &#x22;GET&#x22;,
+      headers: {
+        &#x22;Content-Type&#x22;: &#x22;application/json&#x22;,
+        Authorization: &#x60;Bearer ${jsonData.accessToken}&#x60;,
+      },
+    };
+    try {
+      console.log(&#x60;${jsonData.cartId}&#x60;);
+      response = await axios(request);
+      expect(response.status).to.equals(200);
+      expect(response.data).to.include(&#x60;${jsonData.orderId}&#x60;);
+    } catch (e) {
+      console.log(&#x22;Get single order failed&#x22;);
+      // console.log(&#x22;Error: &#x22; + e);
+    }
+  }</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Get a single product</h1>
+      <dl>
+Creating cart ---------
+Adding items to cart ----------
+        <dt>Status code 200 </dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getSingleProduct.test.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    response = await axios(request);
+    expect(response.status).to.be.equals(200);
+  }</code></pre></dd>
+        <dt>Response is an object</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getSingleProduct.test.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    expect(response).to.be.an(&#x22;object&#x22;);
+  }</code></pre></dd>
+        <dt>Product name</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getSingleProduct.test.js</dt>
+        <dd><pre><code>// console.log(response.data.name);
+expect(response.data.name).to.be.a(&#x22;string&#x22;);</code></pre></dd>
+        <dt>Product Price</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getSingleProduct.test.js</dt>
+        <dd><pre><code>expect(response.data.price).to.be.a(&#x22;number&#x22;);
+expect(response.data.price).to.be.above(0);</code></pre></dd>
+        <dt>Product availability</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getSingleProduct.test.js</dt>
+        <dd><pre><code>expect(response.data.inStock).to.be.true;</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Register API successfully</h1>
+      <dl>
+        <dt>Status code is 201</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/registerApiClient.test.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    response = await axios(request);
+    expect(response.status).to.equal(201);
+  }</code></pre></dd>
+        <dt>Access token not null</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/registerApiClient.test.js</dt>
+        <dd><pre><code>expect(response.data).to.be.an(&#x22;object&#x22;);
+expect(response.data).haveOwnPropertyDescriptor(&#x22;accessToken&#x22;);
+expect(response.data.accessToken).is.not.empty;
+// jsonData.accessToken = response.data.accessToken;
+// fs.writeFileSync(&#x22;../env.json&#x22;, JSON.stringify(jsonData));</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Replace cart Item</h1>
+      <dl>
+Creating cart ---------
+Adding items to cart ----------
+Items added to cart ----------
+Cart Id: U8k9AiiGnfyFNn0EvyRZV
+        <dt>Status code 204</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/replaceProductInCart.test.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    let request = {
+      url: &#x60;${jsonData.baseUrl}/carts/${jsonData.cartId}/items/${jsonData.itemIdOnCart}&#x60;,
+      method: &#x22;PATCH&#x22;,
+      data: {
+        productId: 4646,
+        quantity: 2,
+      },
+    };
+    try {
+      response = await axios(request);
+      expect(response.status).to.equal(204);
+    } catch (e) {
+      console.log(&#x22;Replace product in cart failed&#x22;);
+      // console.log(e);
+    }
+  }</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Update an Order</h1>
+      <dl>
+Creating cart ---------
+Adding items to cart ----------
+Creating Order ------
+
+        <dt>Status code is 201</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/updateOrder.test.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    let request = {
+      url: &#x60;${jsonData.baseUrl}/orders/${jsonData.orderId}&#x60;,
+      method: &#x22;PATCH&#x22;,
+      headers: {
+        &#x22;Content-Type&#x22;: &#x22;application/json&#x22;,
+        Authorization: &#x60;Bearer ${jsonData.accessToken}&#x60;,
+      },
+      data: {
+        comment: &#x22;Pick up at 2PM&#x22;,
+      },
+    };
+    try {
+      console.log(&#x60;${jsonData.cartId}&#x60;);
+      response = await axios(request);
+      // console.log(response);
+      expect(response.status).to.equals(204);
+    } catch (e) {
+      console.log(&#x22;Update order failed&#x22;);
+      // console.log(&#x22;Error: &#x22; + e);
+    }
+  }</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>Get cart items</h1>
+      <dl>
+Creating cart ---------
+Adding items to cart ----------
+        <dt>Status code 200</dt>
+        <dt>/Users/tomasalvarez/WebstormProjects/AxiosTest/test/updateQuantity.test.js</dt>
+        <dd><pre><code>async () =&#x3E; {
+    let request = {
+      url: &#x60;${jsonData.baseUrl}/carts/${jsonData.cartId}/items/${jsonData.itemIdOnCart}&#x60;,
+      method: &#x22;PATCH&#x22;,
+      data: {
+        quantity: 2,
+      },
+      headers: {
+        &#x22;Content-Type&#x22;: &#x22;application/json&#x22;,
+      },
+    };
+    response = await axios(request);
+    expect(response.status).to.equal(204);
+  }</code></pre></dd>
+      </dl>
+    </section>

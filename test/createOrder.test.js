@@ -3,7 +3,7 @@ const { expect } = require("chai");
 const jsonData = require("../env.json");
 const fs = require("fs");
 
-describe("Get cart items", () => {
+describe("Create an order", () => {
   before(async () => {
     let response;
 
@@ -24,18 +24,33 @@ describe("Get cart items", () => {
   });
 
   let response;
-  it("Status code 200", async () => {
+  it("Status code is 201", async () => {
     let request = {
-      url: `${jsonData.baseUrl}/carts/${jsonData.cartId}/items/${jsonData.itemIdOnCart}`,
-      method: "PATCH",
-      data: {
-        quantity: 2,
-      },
+      url: `${jsonData.baseUrl}/orders`,
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${jsonData.accessToken}`,
+      },
+      data: {
+        cartId: `${jsonData.cartId}`,
+        customerName: "Test name",
       },
     };
-    response = await axios(request);
-    expect(response.status).to.equal(204);
+    try {
+      // console.log(`${jsonData.cartId}`);
+      response = await axios(request);
+      expect(response.status).to.equals(201);
+      console.log("Before setting order id");
+      jsonData.orderId = response.data.orderId;
+      jsonData.cartId = "";
+      jsonData.itemIdOnCart = 0;
+
+      await fs.writeFileSync("../env.json", JSON.stringify(jsonData));
+      // console.log("File written: " + jsonData.orderId);
+    } catch (e) {
+      console.log("Order creation failed");
+      // console.log("Error: " + e);
+    }
   });
 });

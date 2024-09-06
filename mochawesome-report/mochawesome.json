@@ -1,0 +1,1086 @@
+{
+  "stats": {
+    "suites": 18,
+    "tests": 24,
+    "passes": 24,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-07-23T19:29:19.003Z",
+    "end": "2024-07-23T19:29:36.770Z",
+    "duration": 17767,
+    "testsRegistered": 24,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "b97bc352-9af2-4b6d-bf43-3bb84a5d0fe5",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "80ab3f2e-c24c-4dbe-ad08-49b885b589fb",
+          "title": "API is up",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/APISatus.test.js",
+          "file": "/test/APISatus.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code is 200",
+              "fullTitle": "API is up Status code is 200",
+              "timedOut": false,
+              "duration": 2442,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// console.log((jsonData))\nlet response = await axios.get(`${jsonData.baseUrl}/status`);\nexpect(response.status).equals(200);",
+              "err": {},
+              "uuid": "e49b817c-4efd-4121-b158-b1b07d556524",
+              "parentUUID": "80ab3f2e-c24c-4dbe-ad08-49b885b589fb",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "e49b817c-4efd-4121-b158-b1b07d556524"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 2442,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "2c9919c5-07d8-48ca-81a7-f1f8c0b28c8a",
+          "title": "Add product to Cart",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/addItemToCart.js",
+          "file": "/test/addItemToCart.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Add product to Cart\"",
+              "fullTitle": "Add product to Cart \"before all\" hook in \"Add product to Cart\"",
+              "timedOut": false,
+              "duration": 624,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "try {\n  let response = await axios.post(`${jsonData.baseUrl}/carts`);\n  jsonData.cartId = response.data.cartId;\n  await fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));\n  // done();\n} catch (e) {\n  // console.log(\"error \" + e);\n}",
+              "err": {},
+              "uuid": "c8b3c32c-705d-41a0-bd20-31ef19e066e0",
+              "parentUUID": "2c9919c5-07d8-48ca-81a7-f1f8c0b28c8a",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code 201",
+              "fullTitle": "Add product to Cart Status code 201",
+              "timedOut": false,
+              "duration": 412,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let request = {\n  url: `${jsonData.baseUrl}/carts/${jsonData.cartId}/items/`,\n  method: \"POST\",\n  data: {\n    productId: `${jsonData.productId}`,\n  },\n};\nconsole.log(\"Antes de hacer el llamado\");\ntry {\n  response = await axios(request);\n  expect(response.status).equals(201);\n  expect(response.data.created).to.be.true;\n  jsonData.itemIdOnCart = response.data.itemId;\n  // console.log(jsonData.itemIdOnCart);\n  fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));\n} catch (e) {\n  console.log(\"Add Item to cart failed\");\n  // console.log(e);\n}",
+              "err": {},
+              "uuid": "18702208-fb59-47cf-8163-f7f054e56cc4",
+              "parentUUID": "2c9919c5-07d8-48ca-81a7-f1f8c0b28c8a",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "18702208-fb59-47cf-8163-f7f054e56cc4"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 412,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "4f5d310a-e3e8-4dbe-855a-dc978bb075d4",
+          "title": "Create a cart",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/createNewCart.test.js",
+          "file": "/test/createNewCart.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code",
+              "fullTitle": "Create a cart Status code",
+              "timedOut": false,
+              "duration": 579,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "response = await axios.post(`${jsonData.baseUrl}/carts`);\nexpect(response.status).to.be.equals(201);\njsonData.cartId = response.data.cartId;\n//console.log(jsonData);\ntry {\n  await fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));\n  // console.log(jsonData);\n} catch (e) {\n  console.log(\"Create cart failed\");\n  // console.log(\"Error \" + e);\n}",
+              "err": {},
+              "uuid": "bd8338a4-6fb4-42ad-8cbb-b54ecc32e187",
+              "parentUUID": "4f5d310a-e3e8-4dbe-855a-dc978bb075d4",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "bd8338a4-6fb4-42ad-8cbb-b54ecc32e187"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 579,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "0da83a75-aed9-4794-81d9-402cf2df9c00",
+          "title": "Create an order",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/createOrder.test.js",
+          "file": "/test/createOrder.test.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Create an order\"",
+              "fullTitle": "Create an order \"before all\" hook in \"Create an order\"",
+              "timedOut": false,
+              "duration": 1109,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let response;\nconsole.log(\"Creating cart ---------\");\nresponse = await axios.post(`${jsonData.baseUrl}/carts`);\njsonData.cartId = response.data.cartId;\nlet request = {\n  url: `${jsonData.baseUrl}/carts/${jsonData.cartId}/items/`,\n  method: \"POST\",\n  data: {\n    productId: `${jsonData.productId}`,\n  },\n};\nconsole.log(\"Adding items to cart ----------\");\nresponse = await axios(request);\njsonData.itemIdOnCart = response.data.itemId;\nawait fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));",
+              "err": {},
+              "uuid": "0760f499-ec64-4e62-880d-5a9acaf4b286",
+              "parentUUID": "0da83a75-aed9-4794-81d9-402cf2df9c00",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code is 201",
+              "fullTitle": "Create an order Status code is 201",
+              "timedOut": false,
+              "duration": 1073,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let request = {\n  url: `${jsonData.baseUrl}/orders`,\n  method: \"POST\",\n  headers: {\n    \"Content-Type\": \"application/json\",\n    Authorization: `Bearer ${jsonData.accessToken}`,\n  },\n  data: {\n    cartId: `${jsonData.cartId}`,\n    customerName: \"Test name\",\n  },\n};\ntry {\n  // console.log(`${jsonData.cartId}`);\n  response = await axios(request);\n  expect(response.status).to.equals(201);\n  console.log(\"Before setting order id\");\n  jsonData.orderId = response.data.orderId;\n  jsonData.cartId = \"\";\n  jsonData.itemIdOnCart = 0;\n  await fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));\n  // console.log(\"File written: \" + jsonData.orderId);\n} catch (e) {\n  console.log(\"Order creation failed\");\n  // console.log(\"Error: \" + e);\n}",
+              "err": {},
+              "uuid": "6cbc4b51-46b4-4473-915c-bfd09a20639c",
+              "parentUUID": "0da83a75-aed9-4794-81d9-402cf2df9c00",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "6cbc4b51-46b4-4473-915c-bfd09a20639c"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1073,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "83c7f9ae-4967-4f37-83eb-3dcc833409b9",
+          "title": "Create an order Fail",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/createOrderNoToken.test.js",
+          "file": "/test/createOrderNoToken.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code is 401",
+              "fullTitle": "Create an order Fail Status code is 401",
+              "timedOut": false,
+              "duration": 82,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let request = {\n  url: `${jsonData.baseUrl}/orders`,\n  method: \"POST\",\n  headers: {\n    \"Content-Type\": \"application/json\",\n  },\n  data: {\n    cartId: `${jsonData.cartId}`,\n    customerName: \"Test name\",\n  },\n};\ntry {\n  response = await axios(request);\n} catch (e) {\n  expect(e.response.status).to.equal(401);\n  expect(e.response.data.error).to.equal(\"Missing Authorization header.\");\n}",
+              "err": {},
+              "uuid": "769f7caf-d411-42dd-b933-51fb68bad927",
+              "parentUUID": "83c7f9ae-4967-4f37-83eb-3dcc833409b9",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "769f7caf-d411-42dd-b933-51fb68bad927"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 82,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "fd56958c-08cf-499f-a890-d25968e503d3",
+          "title": "Delete item on cart",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/deletItemOnCart.js",
+          "file": "/test/deletItemOnCart.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Delete item on cart\"",
+              "fullTitle": "Delete item on cart \"before all\" hook in \"Delete item on cart\"",
+              "timedOut": false,
+              "duration": 645,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let response;\nconsole.log(\"Creating cart ---------\");\nresponse = await axios.post(`${jsonData.baseUrl}/carts`);\ncartId = response.data.cartId;\nlet request = {\n  url: `${jsonData.baseUrl}/carts/${cartId}/items/`,\n  method: \"POST\",\n  data: {\n    productId: `${jsonData.productId}`,\n  },\n};\nconsole.log(\"Adding items to cart ----------\");\nresponse = await axios(request);\nitemIdOnCart = response.data.itemId;\nawait fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));",
+              "err": {},
+              "uuid": "91ee6073-8003-4a08-9c09-41cfd6f154e8",
+              "parentUUID": "fd56958c-08cf-499f-a890-d25968e503d3",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code 204",
+              "fullTitle": "Delete item on cart Status code 204",
+              "timedOut": false,
+              "duration": 468,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let request = {\n  url: `${jsonData.baseUrl}/carts/${cartId}/items/${itemIdOnCart}`,\n  method: \"DELETE\",\n};\ntry {\n  response = await axios(request);\n  expect(response.status).to.equal(204);\n  // jsonData.itemIdOnCart = 0;\n  // await fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));\n} catch (e) {\n  console.log(\"Delete item failed\");\n  // console.log(e);\n}",
+              "err": {},
+              "uuid": "c7d83b55-884f-43f5-ab7d-a01c1a414536",
+              "parentUUID": "fd56958c-08cf-499f-a890-d25968e503d3",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "c7d83b55-884f-43f5-ab7d-a01c1a414536"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 468,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "cc433bbc-22f5-4215-b841-2fcce68af4fe",
+          "title": "Delete an Order",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/deleteOrder.test.js",
+          "file": "/test/deleteOrder.test.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Delete an Order\"",
+              "fullTitle": "Delete an Order \"before all\" hook in \"Delete an Order\"",
+              "timedOut": false,
+              "duration": 921,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let cartId;\nlet response;\nconsole.log(\"Creating cart ---------\");\nresponse = await axios.post(`${jsonData.baseUrl}/carts`);\ncartId = response.data.cartId;\nlet request = {\n  url: `${jsonData.baseUrl}/carts/${cartId}/items/`,\n  method: \"POST\",\n  data: {\n    productId: `${jsonData.productId}`,\n  },\n};\nconsole.log(\"Adding items to cart ----------\");\nawait axios(request);",
+              "err": {},
+              "uuid": "cef7de94-ec43-4373-a7ac-d2c097f0f379",
+              "parentUUID": "cc433bbc-22f5-4215-b841-2fcce68af4fe",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code is 204",
+              "fullTitle": "Delete an Order Status code is 204",
+              "timedOut": false,
+              "duration": 88,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "try {\n  // console.log(`${jsonData.cartId}`);\n  response = await axios(request);\n  expect(response.status).to.equals(204);\n  jsonData.orderId = \"\";\n  await fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));\n} catch (e) {\n  console.log(\"Delete order failed\");\n  // console.log(\"Error: \" + e);\n}",
+              "err": {},
+              "uuid": "8de49d53-0973-4f36-8f9f-1626091a0280",
+              "parentUUID": "cc433bbc-22f5-4215-b841-2fcce68af4fe",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "8de49d53-0973-4f36-8f9f-1626091a0280"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 88,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "766e259f-47f5-4f6a-8934-af48245bcd76",
+          "title": "Get all Order",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getAllOrders.test.js",
+          "file": "/test/getAllOrders.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code is 201",
+              "fullTitle": "Get all Order Status code is 201",
+              "timedOut": false,
+              "duration": 152,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "try {\n  console.log(`${jsonData.cartId}`);\n  response = await axios(request);\n  expect(response.status).to.equals(200);\n} catch (e) {\n  console.log(\"Get all orders failed\");\n  // console.log(\"Error: \" + e);\n}",
+              "err": {},
+              "uuid": "8f87f40c-ff77-4a07-80c2-96a1ad7dcdd1",
+              "parentUUID": "766e259f-47f5-4f6a-8934-af48245bcd76",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "8f87f40c-ff77-4a07-80c2-96a1ad7dcdd1"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 152,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "13acab2f-484c-4a71-8d8e-f71e1c131518",
+          "title": "All products are returned",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getAllProducts.test.js",
+          "file": "/test/getAllProducts.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code 200",
+              "fullTitle": "All products are returned Status code 200",
+              "timedOut": false,
+              "duration": 142,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "response = await axios(request);\n// console.log(response);\nexpect(response.status).equals(200);\njsonData.productId = response.data[0].id;\nawait fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));",
+              "err": {},
+              "uuid": "d1b2d280-b12b-4a64-98ff-2d7e4f05d550",
+              "parentUUID": "13acab2f-484c-4a71-8d8e-f71e1c131518",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "data should not be empty",
+              "fullTitle": "All products are returned data should not be empty",
+              "timedOut": false,
+              "duration": 1,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "expect(response.data).to.not.be.empty;",
+              "err": {},
+              "uuid": "bb8ba43f-8be6-4079-b645-a0392db7c866",
+              "parentUUID": "13acab2f-484c-4a71-8d8e-f71e1c131518",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "d1b2d280-b12b-4a64-98ff-2d7e4f05d550",
+            "bb8ba43f-8be6-4079-b645-a0392db7c866"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 143,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "32944bc1-45e0-4d21-aa3f-fd5dbdfed212",
+          "title": "Get a cart",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getCart.test.js",
+          "file": "/test/getCart.test.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Get a cart\"",
+              "fullTitle": "Get a cart \"before all\" hook in \"Get a cart\"",
+              "timedOut": false,
+              "duration": 396,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let response;\nconsole.log(\"Creating cart ---------\");\nresponse = await axios.post(`${jsonData.baseUrl}/carts`);\njsonData.cartId = response.data.cartId;\nlet request = {\n  url: `${jsonData.baseUrl}/carts/${jsonData.cartId}/items/`,\n  method: \"POST\",\n  data: {\n    productId: `${jsonData.productId}`,\n  },\n};\nawait fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));",
+              "err": {},
+              "uuid": "a9421d20-03c4-4820-94cd-a4a0363ed01f",
+              "parentUUID": "32944bc1-45e0-4d21-aa3f-fd5dbdfed212",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code 200",
+              "fullTitle": "Get a cart Status code 200",
+              "timedOut": false,
+              "duration": 80,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "response = await axios.get(`${jsonData.baseUrl}/carts/${jsonData.cartId}`);\nexpect(response.status).to.equal(200);\nexpect(response.data.items).to.be.empty;",
+              "err": {},
+              "uuid": "2bd0a4e4-f495-40a4-a03c-80357dddc5d4",
+              "parentUUID": "32944bc1-45e0-4d21-aa3f-fd5dbdfed212",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "2bd0a4e4-f495-40a4-a03c-80357dddc5d4"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 80,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "a63b701e-b390-4bd8-8dfa-28cdbd16df15",
+          "title": "Get cart items",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getCartItems.test.js",
+          "file": "/test/getCartItems.test.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Get cart items\"",
+              "fullTitle": "Get cart items \"before all\" hook in \"Get cart items\"",
+              "timedOut": false,
+              "duration": 919,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let response;\nconsole.log(\"Creating cart ---------\");\ntry {\n  response = await axios.post(`${jsonData.baseUrl}/carts`);\n  jsonData.cartId = response.data.cartId;\n  let request = {\n    url: `${jsonData.baseUrl}/carts/${jsonData.cartId}/items/`,\n    method: \"POST\",\n    data: {\n      productId: `${jsonData.productId}`,\n    },\n  };\n  console.log(\"Adding items to cart ----------\");\n  response = await axios(request);\n  jsonData.itemIdOnCart = response.data.itemId;\n  await fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));\n} catch (e) {\n  console.log(e);\n}",
+              "err": {},
+              "uuid": "302757f8-f1d7-41de-8ae8-0bb2b724190d",
+              "parentUUID": "a63b701e-b390-4bd8-8dfa-28cdbd16df15",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code 200",
+              "fullTitle": "Get cart items Status code 200",
+              "timedOut": false,
+              "duration": 81,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "response = await axios.get(\n  `${jsonData.baseUrl}/carts/${jsonData.cartId}/items`,\n);\nexpect(response.status).to.equal(200);",
+              "err": {},
+              "uuid": "a8e3ce0d-77c7-4d86-9f22-a7bfc47f3f43",
+              "parentUUID": "a63b701e-b390-4bd8-8dfa-28cdbd16df15",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "a8e3ce0d-77c7-4d86-9f22-a7bfc47f3f43"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 81,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "7be0c7fb-7bf4-4988-bf88-64306d2ba87f",
+          "title": "Get an Order",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getSingleOrder.test.js",
+          "file": "/test/getSingleOrder.test.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Get an Order\"",
+              "fullTitle": "Get an Order \"before all\" hook in \"Get an Order\"",
+              "timedOut": false,
+              "duration": 1646,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let response;\ntry {\n  console.log(\"Creating cart ---------\");\n  response = await axios.post(`${jsonData.baseUrl}/carts`);\n  jsonData.cartId = response.data.cartId;\n  let requestAddItemsToCart = {\n    url: `${jsonData.baseUrl}/carts/${jsonData.cartId}/items/`,\n    method: \"POST\",\n    data: {\n      productId: `${jsonData.productId}`,\n    },\n  };\n  console.log(\"Adding items to cart ----------\");\n  response = await axios(requestAddItemsToCart);\n  jsonData.itemIdOnCart = response.data.itemId;\n  console.log(\"Creating Order ------\");\n  let requestCreateOrder = {\n    url: `${jsonData.baseUrl}/orders`,\n    method: \"POST\",\n    headers: {\n      \"Content-Type\": \"application/json\",\n      Authorization: `Bearer ${jsonData.accessToken}`,\n    },\n    data: {\n      cartId: `${jsonData.cartId}`,\n      customerName: \"Test name\",\n    },\n  };\n  response = await axios(requestCreateOrder);\n  jsonData.orderId = response.data.orderId;\n  jsonData.cartId = \"\";\n  jsonData.itemIdOnCart = 0;\n  await fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));\n} catch (e) {\n  console.log(e);\n}",
+              "err": {},
+              "uuid": "d4dbad28-3716-4fe0-b672-9badb11ee5ce",
+              "parentUUID": "7be0c7fb-7bf4-4988-bf88-64306d2ba87f",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code is 200",
+              "fullTitle": "Get an Order Status code is 200",
+              "timedOut": false,
+              "duration": 87,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let request = {\n  url: `${jsonData.baseUrl}/orders/${jsonData.orderId}`,\n  method: \"GET\",\n  headers: {\n    \"Content-Type\": \"application/json\",\n    Authorization: `Bearer ${jsonData.accessToken}`,\n  },\n};\ntry {\n  // console.log(`${jsonData.cartId}`);\n  response = await axios(request);\n  expect(response.status).to.equals(200);\n  expect(response.data.id).to.equals(`${jsonData.orderId}`);\n} catch (e) {\n  console.log(\"Get single order failed\");\n  // console.log(\"Error: \" + e);\n}",
+              "err": {},
+              "uuid": "fe87fdb5-14e9-48af-9740-d6ca0ec69c97",
+              "parentUUID": "7be0c7fb-7bf4-4988-bf88-64306d2ba87f",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "fe87fdb5-14e9-48af-9740-d6ca0ec69c97"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 87,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "9c7605d1-b8a5-442f-af7b-0f3103a77f56",
+          "title": "Get a single product",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/getSingleProduct.test.js",
+          "file": "/test/getSingleProduct.test.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Get a single product\"",
+              "fullTitle": "Get a single product \"before all\" hook in \"Get a single product\"",
+              "timedOut": false,
+              "duration": 891,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let response;\nconsole.log(\"Creating cart ---------\");\nresponse = await axios.post(`${jsonData.baseUrl}/carts`);\njsonData.cartId = response.data.cartId;\nlet requestAddItemsToCart = {\n  url: `${jsonData.baseUrl}/carts/${jsonData.cartId}/items/`,\n  method: \"POST\",\n  data: {\n    productId: `${jsonData.productId}`,\n  },\n};\nconsole.log(\"Adding items to cart ----------\");\nresponse = await axios(requestAddItemsToCart);\njsonData.itemIdOnCart = response.data.itemId;\nawait fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));\nrequest = {\n  url: `${jsonData.baseUrl}/products/${jsonData.productId}`,\n  method: \"GET\",\n};",
+              "err": {},
+              "uuid": "2710bd86-a660-41d1-9cc9-381d52bc3925",
+              "parentUUID": "9c7605d1-b8a5-442f-af7b-0f3103a77f56",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code 200 ",
+              "fullTitle": "Get a single product Status code 200 ",
+              "timedOut": false,
+              "duration": 80,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "response = await axios(request);\nexpect(response.status).to.be.equals(200);",
+              "err": {},
+              "uuid": "debf639e-8d55-44c8-b669-ca658583d0c0",
+              "parentUUID": "9c7605d1-b8a5-442f-af7b-0f3103a77f56",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Response is an object",
+              "fullTitle": "Get a single product Response is an object",
+              "timedOut": false,
+              "duration": 1,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "expect(response).to.be.an(\"object\");",
+              "err": {},
+              "uuid": "a61273c2-1d1e-4474-ae83-8dd9060cc936",
+              "parentUUID": "9c7605d1-b8a5-442f-af7b-0f3103a77f56",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Product name",
+              "fullTitle": "Get a single product Product name",
+              "timedOut": false,
+              "duration": 1,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// console.log(response.data.name);\nexpect(response.data.name).to.be.a(\"string\");",
+              "err": {},
+              "uuid": "10c15a49-6107-4bc9-91f9-9a5b0e0dd454",
+              "parentUUID": "9c7605d1-b8a5-442f-af7b-0f3103a77f56",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Product Price",
+              "fullTitle": "Get a single product Product Price",
+              "timedOut": false,
+              "duration": 0,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "expect(response.data.price).to.be.a(\"number\");\nexpect(response.data.price).to.be.above(0);",
+              "err": {},
+              "uuid": "c5cc8b54-633e-455e-9c7f-a5419f73f325",
+              "parentUUID": "9c7605d1-b8a5-442f-af7b-0f3103a77f56",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Product availability",
+              "fullTitle": "Get a single product Product availability",
+              "timedOut": false,
+              "duration": 0,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "expect(response.data.inStock).to.be.true;",
+              "err": {},
+              "uuid": "3d3733d9-f0f2-4fba-b87f-b277ed16e9a7",
+              "parentUUID": "9c7605d1-b8a5-442f-af7b-0f3103a77f56",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "debf639e-8d55-44c8-b669-ca658583d0c0",
+            "a61273c2-1d1e-4474-ae83-8dd9060cc936",
+            "10c15a49-6107-4bc9-91f9-9a5b0e0dd454",
+            "c5cc8b54-633e-455e-9c7f-a5419f73f325",
+            "3d3733d9-f0f2-4fba-b87f-b277ed16e9a7"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 82,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "87afae4b-9403-4065-a346-4772141dddfd",
+          "title": "Register API successfully",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/registerApiClient.test.js",
+          "file": "/test/registerApiClient.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code is 201",
+              "fullTitle": "Register API successfully Status code is 201",
+              "timedOut": false,
+              "duration": 322,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "response = await axios(request);\nexpect(response.status).to.equal(201);",
+              "err": {},
+              "uuid": "36d1d1a3-8a33-40a4-9da2-9abd657638ef",
+              "parentUUID": "87afae4b-9403-4065-a346-4772141dddfd",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Access token not null",
+              "fullTitle": "Register API successfully Access token not null",
+              "timedOut": false,
+              "duration": 1,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "expect(response.data).to.be.an(\"object\");\nexpect(response.data).haveOwnPropertyDescriptor(\"accessToken\");\nexpect(response.data.accessToken).is.not.empty;\n// jsonData.accessToken = response.data.accessToken;\n// fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));",
+              "err": {},
+              "uuid": "05690d0b-0586-44fb-9038-c26fa41f2808",
+              "parentUUID": "87afae4b-9403-4065-a346-4772141dddfd",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "36d1d1a3-8a33-40a4-9da2-9abd657638ef",
+            "05690d0b-0586-44fb-9038-c26fa41f2808"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 323,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "0d051c42-558d-44ab-ac1d-bf180d93af87",
+          "title": "Register API fail",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/registerApiClientFailing.test.js",
+          "file": "/test/registerApiClientFailing.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code is 409",
+              "fullTitle": "Register API fail Status code is 409",
+              "timedOut": false,
+              "duration": 85,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "try {\n  response = await axios(request);\n} catch (e) {\n  expect(e.response.status).to.equal(409);\n  expect(e.response.data.error).to.equal(\n    \"API client already registered. Try a different email.\",\n  );\n  // console.log(e);\n}",
+              "err": {},
+              "uuid": "0acfc8b4-852a-44e4-8146-1e0913b76c45",
+              "parentUUID": "0d051c42-558d-44ab-ac1d-bf180d93af87",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "0acfc8b4-852a-44e4-8146-1e0913b76c45"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 85,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "1f38906e-059f-444c-b8fa-928f7360e5d1",
+          "title": "Replace cart Item",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/replaceProductInCart.test.js",
+          "file": "/test/replaceProductInCart.test.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Replace cart Item\"",
+              "fullTitle": "Replace cart Item \"before all\" hook in \"Replace cart Item\"",
+              "timedOut": false,
+              "duration": 815,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let response;\ntry {\n  console.log(\"Creating cart ---------\");\n  response = await axios.post(`${jsonData.baseUrl}/carts`);\n  jsonData.cartId = response.data.cartId;\n  let request = {\n    url: `${jsonData.baseUrl}/carts/${jsonData.cartId}/items/`,\n    method: \"POST\",\n    data: {\n      productId: `${jsonData.productId}`,\n    },\n  };\n  console.log(\"Adding items to cart ----------\");\n  response = await axios(request);\n  jsonData.itemIdOnCart = response.data.itemId;\n  await fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));\n  console.log(\"Items added to cart ----------\");\n  console.log(\"Cart Id: \" + jsonData.cartId);\n} catch (e) {\n  console.log(\"Error before: \" + e);\n}",
+              "err": {},
+              "uuid": "346227f8-b2ae-40ec-80a6-336a54d70081",
+              "parentUUID": "1f38906e-059f-444c-b8fa-928f7360e5d1",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code 204",
+              "fullTitle": "Replace cart Item Status code 204",
+              "timedOut": false,
+              "duration": 386,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let request = {\n  url: `${jsonData.baseUrl}/carts/${jsonData.cartId}/items/${jsonData.itemIdOnCart}`,\n  method: \"PATCH\",\n  data: {\n    productId: 4646,\n    quantity: 2,\n  },\n};\ntry {\n  response = await axios(request);\n  expect(response.status).to.equal(204);\n} catch (e) {\n  console.log(\"Replace product in cart failed\");\n  // console.log(e);\n}",
+              "err": {},
+              "uuid": "a012b5da-b617-40f9-abb6-0da29ea18dc0",
+              "parentUUID": "1f38906e-059f-444c-b8fa-928f7360e5d1",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "a012b5da-b617-40f9-abb6-0da29ea18dc0"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 386,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "f406543d-b9be-4127-a5f4-ef5cef3731fa",
+          "title": "Update an Order",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/updateOrder.test.js",
+          "file": "/test/updateOrder.test.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Update an Order\"",
+              "fullTitle": "Update an Order \"before all\" hook in \"Update an Order\"",
+              "timedOut": false,
+              "duration": 1702,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let response;\nconsole.log(\"Creating cart ---------\");\nresponse = await axios.post(`${jsonData.baseUrl}/carts`);\njsonData.cartId = response.data.cartId;\nlet requestAddItemsToCart = {\n  url: `${jsonData.baseUrl}/carts/${jsonData.cartId}/items/`,\n  method: \"POST\",\n  data: {\n    productId: `${jsonData.productId}`,\n  },\n};\nconsole.log(\"Adding items to cart ----------\");\nresponse = await axios(requestAddItemsToCart);\njsonData.itemIdOnCart = response.data.itemId;\nconsole.log(\"Creating Order ------\");\nlet requestCreateOrder = {\n  url: `${jsonData.baseUrl}/orders`,\n  method: \"POST\",\n  headers: {\n    \"Content-Type\": \"application/json\",\n    Authorization: `Bearer ${jsonData.accessToken}`,\n  },\n  data: {\n    cartId: `${jsonData.cartId}`,\n    customerName: \"Test name\",\n  },\n};\nresponse = await axios(requestCreateOrder);\njsonData.orderId = response.data.orderId;\njsonData.cartId = \"\";\njsonData.itemIdOnCart = 0;\nawait fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));",
+              "err": {},
+              "uuid": "f83ef8ac-5718-4b72-88ac-92f1cdf12738",
+              "parentUUID": "f406543d-b9be-4127-a5f4-ef5cef3731fa",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code is 201",
+              "fullTitle": "Update an Order Status code is 201",
+              "timedOut": false,
+              "duration": 304,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let request = {\n  url: `${jsonData.baseUrl}/orders/${jsonData.orderId}`,\n  method: \"PATCH\",\n  headers: {\n    \"Content-Type\": \"application/json\",\n    Authorization: `Bearer ${jsonData.accessToken}`,\n  },\n  data: {\n    comment: \"Pick up at 2PM\",\n  },\n};\ntry {\n  // console.log(`${jsonData.cartId}`);\n  response = await axios(request);\n  // console.log(response);\n  expect(response.status).to.equals(204);\n} catch (e) {\n  console.log(\"Update order failed\");\n  // console.log(\"Error: \" + e);\n}",
+              "err": {},
+              "uuid": "a1e9a36e-a541-4e46-a71f-f789ec619e96",
+              "parentUUID": "f406543d-b9be-4127-a5f4-ef5cef3731fa",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "a1e9a36e-a541-4e46-a71f-f789ec619e96"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 304,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        },
+        {
+          "uuid": "f8598a4f-62eb-4292-b13e-e325936cb554",
+          "title": "Get cart items",
+          "fullFile": "/Users/tomasalvarez/WebstormProjects/AxiosTest/test/updateQuantity.test.js",
+          "file": "/test/updateQuantity.test.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Get cart items\"",
+              "fullTitle": "Get cart items \"before all\" hook in \"Get cart items\"",
+              "timedOut": false,
+              "duration": 901,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let response;\nconsole.log(\"Creating cart ---------\");\nresponse = await axios.post(`${jsonData.baseUrl}/carts`);\njsonData.cartId = response.data.cartId;\nlet request = {\n  url: `${jsonData.baseUrl}/carts/${jsonData.cartId}/items/`,\n  method: \"POST\",\n  data: {\n    productId: `${jsonData.productId}`,\n  },\n};\nconsole.log(\"Adding items to cart ----------\");\nresponse = await axios(request);\njsonData.itemIdOnCart = response.data.itemId;\nawait fs.writeFileSync(\"../env.json\", JSON.stringify(jsonData));",
+              "err": {},
+              "uuid": "1060fc16-1bc4-4f5d-8ca7-093d1d62e35f",
+              "parentUUID": "f8598a4f-62eb-4292-b13e-e325936cb554",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Status code 200",
+              "fullTitle": "Get cart items Status code 200",
+              "timedOut": false,
+              "duration": 311,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let request = {\n  url: `${jsonData.baseUrl}/carts/${jsonData.cartId}/items/${jsonData.itemIdOnCart}`,\n  method: \"PATCH\",\n  data: {\n    quantity: 2,\n  },\n  headers: {\n    \"Content-Type\": \"application/json\",\n  },\n};\nresponse = await axios(request);\nexpect(response.status).to.equal(204);",
+              "err": {},
+              "uuid": "55429a1f-d720-4688-97f8-964e8549be91",
+              "parentUUID": "f8598a4f-62eb-4292-b13e-e325936cb554",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "55429a1f-d720-4688-97f8-964e8549be91"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 311,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 20000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 20000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.6.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": null,
+      "version": "6.2.0"
+    }
+  }
+}

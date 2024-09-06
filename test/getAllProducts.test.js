@@ -4,18 +4,20 @@ const jsonData = require("../env.json");
 const fs = require("fs");
 
 describe("All products are returned", () => {
-  let config = {
+  let request = {
+    url: `${jsonData.baseUrl}/products`,
+    method: "GET",
     params: {
       results: 20,
     },
   };
   let response;
   it("Status code 200", async () => {
-    response = await axios.get(`${jsonData.baseUrl}/products`, config);
+    response = await axios(request);
     // console.log(response);
     expect(response.status).equals(200);
     jsonData.productId = response.data[0].id;
-    fs.writeFileSync("../env.json", JSON.stringify(jsonData));
+    await fs.writeFileSync("../env.json", JSON.stringify(jsonData));
   });
 
   it("data should not be empty", async () => {
